@@ -14,9 +14,10 @@ double square(double x) {
 */
 double actualRiemannSum(double a, double b, int n, int choice, int RChoice) {
 
-    /* This calculates the width of each subinterval (Δx) by dividing 
-    * the difference between the upper limit b and lower limit a by the 
-    * number of subintervals n. dx represents the step size in the x-axis.
+    /*    calculate Δx by dividing 
+    *    the difference between the upper limit b and 
+    *    lower limit a by the  number of subintervals n. 
+    *    dx represents the step size in the reference axis. 
     */
     double dx = (b - a) / n;
 
@@ -35,7 +36,11 @@ double actualRiemannSum(double a, double b, int n, int choice, int RChoice) {
         case 4: calc =  exp; break;
     }
 
-    /* This modifies the Riemann sum to apply the three types */
+    /* The choice of the user modifies the type of Riemann sum to be used. 
+    Case 1 will calculate with left endpoints starting from a. 
+    Case 2 calculates with right endpoints starting from a + dx. 
+    Finally, Case 3 calculates with midpoints as we get the half of delta x or step size.  
+    */
     switch (RChoice) {
         // calculates with left endpoints starting from a
         case 1: Riemm = 0; break;
@@ -45,31 +50,32 @@ double actualRiemannSum(double a, double b, int n, int choice, int RChoice) {
         case 3: Riemm = dx/2; break;
     }
 
-    //continues until i < n, where n is the number of subintervals specified by the user
+    /* the loop runs until i < n, where n is the number of 
+    subintervals specified by the user since we are looking 
+    for the summation of the area of each subdivision. The loop 
+    will calculate the height of each subinterval as we increment it by 1.
+    */
     for (int i = 0; i < n; i++) {
 
-        /* calculates the x-coordinate of the right endpoint of the current 
-        * subinterval. xi is calculated by adding i * dx to the starting point 
-        * a, which moves xi from the left endpoint of the first subinterval to 
-        * the right endpoint of the last subinterval.
+        /* calculates the x-coordinate of whatever point is chosen 
+        by the current subinterval. xi is calculated by adding i * dx 
+        to the starting point a, which moves xi from a point in the 
+        subinterval to a point in the next subinterval.
         */
         double xi = a + Riemm + i * dx;
 
-        /* the function calc(xi) is evaluated at the right endpoint xi of the 
-        * current subinterval, and the result is added to the running total sum.
+        /* evaluates the height of a subinterval which is added to the running total sum. 
+        The loop repeats this process for each subinterval, evaluating the given function 
+        at a point for each rectangle and accumulating the results in sum.
+
         */
         sum += calc(xi);
-
-        /* The loop repeats this process for each subinterval, evaluating the 
-        * function at the right endpoint of each subinterval and accumulating the 
-        * results in sum.
-        */
     }
 
-    /* After the loop finishes, the total accumulated sum of function 
-    * evaluations is multiplied by dx. The multiplication by dx scales the sum to account 
-    * for the width of each subinterval, making the result an approximation 
-    * of the integral over the given interval [a, b].
+    /* the total accumulated sum of function  evaluations is multiplied by dx. 
+    The multiplication by dx scales the sum to account  for the width of each 
+    subinterval, making the result an approximation  of the integral over the 
+    given interval [a, b].
     */
     return dx * sum;
 }
