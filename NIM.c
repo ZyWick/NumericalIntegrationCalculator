@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <math.h>
-#include "exprtk.hpp"
 
 double square(double x) {
     return x * x; 
